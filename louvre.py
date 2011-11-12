@@ -5,14 +5,17 @@ from resources import grid,camera,draw_localAxis
 from models.floor import floor
 from models.teapot import teapot
 
-class pygletApp(pyglet.window.Window):
+class louvre(pyglet.window.Window):
     def __init__(self):
-        super(pygletApp, self).__init__(width=800,height=600)
+        super(louvre, self).__init__(width=800,height=600)
 
         self.set_exclusive_mouse(True)
         self.grid    = grid(size=500)
         self.camera  = camera(pos=(0., -100., -750.),rot=(0.,0.,0.),window=self)
         self.renderMode = GL_FILL
+
+        # rotational values
+        self.xrot = self.yrot = self.zrot = 0.0
 
         # lighting
         self.light = False
@@ -23,10 +26,18 @@ class pygletApp(pyglet.window.Window):
         self.left_wall = floor(500, 500, 'lightwood.jpg')
         self.behind_wall = floor(500, 500, 'lightwood.jpg')
 
+
+
         # Exhibits
-        self.teapot = teapot(100)
+        self.exhibits = []
+
+        self.teapot = teapot()   
+        self.exhibits.append(self.teapot)
 
 
+         
+        # Current Focus
+        self.current_focus = self.exhibits[0]
 
         # Lighting
         LightAmbient  = (GLfloat*4)(0.5, 0.5, 0.5, 1.0)
@@ -60,6 +71,16 @@ class pygletApp(pyglet.window.Window):
                 glDisable(GL_LIGHTING)
             else:
                 glEnable(GL_LIGHTING)
+        if sym == key.X:
+            self.current_focus.xrot = not self.current_focus.xrot
+            print "Rotation by X axis : %r " % self.current_focus.xrot
+        if sym == key.Y:
+            self.current_focus.yrot = not self.current_focus.yrot
+            print "Rotation by Y axis : %r " % self.current_focus.yrot
+        if sym == key.Z:
+            self.current_focus.zrot = not self.current_focus.zrot
+            print "Rotation by Z axis : %r" % self.current_focus.zrot
+
 
     # Function that sets the camera to 3D mode            
     def on_resize(self,width, height): 
@@ -78,8 +99,9 @@ class pygletApp(pyglet.window.Window):
         #update everything
         self.camera.update(dt)
         self.grid.update(dt)
-        # your update code here...
 
+        for exhibit in self.exhibits:
+            exhibit.update()
     # your draw function
     def draw(self):
         glEnable(GL_TEXTURE_2D)
@@ -93,7 +115,7 @@ class pygletApp(pyglet.window.Window):
         # floor
         glPushMatrix()
         glRotatef(90, 1, 0, 0)
-        self.floor.draw()
+        # self.floor.draw()
         glPopMatrix()
 
         # right-side wall
@@ -117,17 +139,13 @@ class pygletApp(pyglet.window.Window):
         glPopMatrix()
 
         # teapot
-        glDisable(GL_TEXTURE_2D)
         glPushMatrix()
-        glTranslatef(0, 300, 0)
+        glTranslatef(0, self.teapot.shelf.height, 0)
         self.teapot.draw()
         glPopMatrix()
-        
 
-# our application is created using the pygletApp class
-problem_3 = pygletApp()
-
-while not problem_3.has_exit:
-    problem_3.update()
-    problem_3.draw()
-    problem_3.flip()
+assignment_1 = louvre()
+while not assignment_1.has_exit:
+    assignment_1.update()
+    assignment_1.draw()
+    assignment_1.flip()
