@@ -4,6 +4,8 @@ from resources import grid,camera,draw_localAxis
 
 from models.floor import floor
 from models.teapot import teapot
+from models.basketball import basketball
+from models.snowman import snowman
 
 class louvre(pyglet.window.Window):
     def __init__(self):
@@ -34,10 +36,17 @@ class louvre(pyglet.window.Window):
         self.teapot = teapot()   
         self.exhibits.append(self.teapot)
 
+        self.basketball = basketball()
+        self.exhibits.append(self.basketball)
+
+        self.snowman = snowman()
+        self.exhibits.append(self.snowman)
+
 
          
         # Current Focus
-        self.current_focus = self.exhibits[0]
+        self.current_index = 0
+        self.current_focus = self.exhibits[self.current_index]
 
         # Lighting
         LightAmbient  = (GLfloat*4)(0.5, 0.5, 0.5, 1.0)
@@ -71,6 +80,8 @@ class louvre(pyglet.window.Window):
                 glDisable(GL_LIGHTING)
             else:
                 glEnable(GL_LIGHTING)
+
+        # Control of rotational axes
         if sym == key.X:
             self.current_focus.xrot = not self.current_focus.xrot
             print "Rotation by X axis : %r " % self.current_focus.xrot
@@ -81,6 +92,21 @@ class louvre(pyglet.window.Window):
             self.current_focus.zrot = not self.current_focus.zrot
             print "Rotation by Z axis : %r" % self.current_focus.zrot
 
+        if sym == key.UP:
+            self.current_focus.scale += 0.5 
+        if sym == key.DOWN:
+            if self.current_focus.scale <= 0.5:
+                self.current_focus.scale = 0.5
+            else:
+                self.current_focus.scale -= 0.5
+        if sym == key.T:
+            self.current_focus.texture_status = not self.current_focus.texture_status
+        if sym == key.TAB:
+            if self.current_index == len(self.exhibits) - 1:
+                self.current_index = 0
+            else:
+                self.current_index += 1
+            self.current_focus = self.exhibits[self.current_index]
 
     # Function that sets the camera to 3D mode            
     def on_resize(self,width, height): 
@@ -110,12 +136,12 @@ class louvre(pyglet.window.Window):
         glEnable(GL_DEPTH_TEST)
 
         self.camera.draw()
-        self.grid.draw()
+        # self.grid.draw()
 
         # floor
         glPushMatrix()
         glRotatef(90, 1, 0, 0)
-        # self.floor.draw()
+        self.floor.draw()
         glPopMatrix()
 
         # right-side wall
@@ -140,8 +166,21 @@ class louvre(pyglet.window.Window):
 
         # teapot
         glPushMatrix()
-        glTranslatef(0, self.teapot.shelf.height, 0)
+        glTranslatef( -300, self.teapot.shelf.height, 0)
         self.teapot.draw()
+        glPopMatrix()
+
+        # basketball
+        glPushMatrix()
+        glTranslatef( 300, self.basketball.shelf.height, 0)
+        self.basketball.draw()
+        glPopMatrix()
+
+        # snowman
+        glPushMatrix()
+        glTranslatef(-300, self.snowman.shelf.height, 400)
+        glRotatef(90, 0, 1, 0)
+        self.snowman.draw()
         glPopMatrix()
 
 assignment_1 = louvre()
