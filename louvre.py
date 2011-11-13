@@ -8,6 +8,8 @@ from models.basketball import Basketball
 from models.snowman import Snowman
 from models.painting import Painting
 
+from utils.text import Text
+
 class Louvre(pyglet.window.Window):
     def __init__(self):
         super(Louvre, self).__init__(width=800,height=600)
@@ -28,6 +30,7 @@ class Louvre(pyglet.window.Window):
         self.right_wall = Floor(500, 500, 'lightwood.jpg')
         self.left_wall = Floor(500, 500, 'lightwood.jpg')
         self.behind_wall = Floor(500, 500, 'lightwood.jpg')
+        self.ceiling = Floor(500, 500, 'lightwood.jpg')
 
 
         # Exhibits
@@ -42,39 +45,32 @@ class Louvre(pyglet.window.Window):
         self.snowman = Snowman()
         self.exhibits.append(self.snowman)
 
-        starry_night_label = """
-            Starry Night Painting by
-            Van Goh
-        """
+        starry_night_label = "Starry Night Painting\n----------\n- Texture On/Off\n- Rotate by Z\n- Scaling On/Off" 
         self.starry_night = Painting(100, 100, 'starry_night.jpg', starry_night_label)
         self.exhibits.append(self.starry_night)
         
 
-        scream_label = """
-            Scream Painting by
-            Picaso
-        """
+        scream_label = "Scream Painting\n----------\n- Texture On/Off\n- Rotate by Z\n- Scaling On/Off" 
         self.scream = Painting(100, 100, 'scream.jpg', scream_label)
         self.exhibits.append(self.scream)
         
 
-        van_gogh_label = """
-            Van Gogh Painting by
-            Van Gogh
-        """
+        van_gogh_label = "Van Gogh Painting\n----------\n- Texture On/Off\n- Rotate by Z\n- Scaling On/Off"     
+        self.scream = Painting(100, 100, 'scream.jpg', scream_label)
         self.van_gogh = Painting(50, 70, 'vangogh.jpg', van_gogh_label)
         self.exhibits.append(self.van_gogh)
         
-        son_of_man_label = """
-            Son of Man Painting by
-            Rene Magritte
-        """
+        son_of_man_label =  " Son of Man Painting\n----------\n- Texture On/Off\n- Rotate by Z\n- Scaling On/Off"
         self.son_of_man = Painting(70, 100, 'son_of_man.jpg', son_of_man_label)
         self.exhibits.append(self.son_of_man)
          
         # Current Focus
         self.current_index = 0
         self.current_focus = self.exhibits[self.current_index]
+        
+        # Signboard
+        sign_text = "Welcome to the Louvre\n--------------------\n* X - rotate an object via X\n* Y - rotate an object via Y\n* Z - rotate an object via Z\n* T - Enable/Disable Texture\n* UP-Arrow - Scale up\n* Down-Arrow - Scale down\n* Tab - Switch object\n---------------\nCurrent Object Index " + str(self.current_index)
+        self.signboard = Text(sign_text, x = 0, y = 0)
 
         # Lighting
         LightAmbient  = (GLfloat*4)(0.5, 0.5, 0.5, 1.0)
@@ -156,6 +152,9 @@ class Louvre(pyglet.window.Window):
 
         for exhibit in self.exhibits:
             exhibit.update()
+
+        sign_text = "Welcome to the Louvre\n--------------------\n* X - rotate an object via X\n* Y - rotate an object via Y\n* Z - rotate an object via Z\n* T - Enable/Disable Texture\n* UP-Arrow - Scale up\n* Down-Arrow - Scale down\n* Tab - Switch object\n---------------\nCurrent Object Index " + str(self.current_index)
+        self.signboard.update(sign_text)
     # your draw function
     def draw(self):
         glEnable(GL_TEXTURE_2D)
@@ -192,6 +191,13 @@ class Louvre(pyglet.window.Window):
         self.behind_wall.draw()
         glPopMatrix()
 
+        # ceiling
+        glPushMatrix()
+        glTranslatef(0, self.left_wall.height * 2, 0)
+        glRotatef(90, 1, 0, 0)
+        self.ceiling.draw()
+        glPopMatrix()
+
         # teapot
         glPushMatrix()
         glTranslatef( -200, self.teapot.shelf.height, 0)
@@ -219,7 +225,7 @@ class Louvre(pyglet.window.Window):
 
         glPushMatrix()
         glTranslatef(-499, 300, 0)
-        glRotatef(-90, 0, 1, 0)
+        glRotatef(90, 0, 1, 0)
         self.scream.draw()
         glPopMatrix()
 
@@ -230,8 +236,15 @@ class Louvre(pyglet.window.Window):
 
         glPushMatrix()
         glTranslatef(499, 300, 0)
-        glRotatef(90, 0, 1, 0)
+        glRotatef(-90, 0, 1, 0)
         self.son_of_man.draw()
+        glPopMatrix()
+
+        # signboard
+        glPushMatrix()
+        glTranslatef(300, 100, 350)
+        glRotatef(-45, 0, 1, 0)
+        self.signboard.draw()
         glPopMatrix()
 
 assignment_1 = Louvre()
