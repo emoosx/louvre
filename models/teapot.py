@@ -11,7 +11,8 @@ class Teapot:
         self.texture_status = True
         self.image_file = image_file
         self.load_textures()
-        self.shelf = Shelf() 
+        label = "Teapot\n----------\n- Rotation via X, Y, Z axes\n- Scaling\n- On/Off Texture"
+        self.shelf = Shelf(label = label) 
 
         # rotational values
         self.xrot = self.yrot = self.zrot = True

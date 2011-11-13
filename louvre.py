@@ -30,7 +30,6 @@ class Louvre(pyglet.window.Window):
         self.behind_wall = Floor(500, 500, 'lightwood.jpg')
 
 
-
         # Exhibits
         self.exhibits = []
 

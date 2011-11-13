@@ -7,7 +7,8 @@ class Basketball:
     def __init__(self, radius=40, image_file="bb.jpg"):
         self.radius = radius
         self.image_file = image_file
-        self.shelf = Shelf()
+        label = "Basketball\n----------\n- Rotation via X, Y, Z axes\n- Scaling\n- On/Off Texture"
+        self.shelf = Shelf(label = label)
         self.scale = 1
         self.texture_status = True
         self.load_textures()

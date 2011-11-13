@@ -7,15 +7,12 @@ class Snowman:
     def __init__(self, body_radius=50 ):
         self.body_radius = body_radius
         self.scale = 1 
-        self.shelf = Shelf()
+        label = "Snowman\n----------\n - Lethal\n- Scaling"
+        self.shelf = Shelf(label=label)
         # rotational values
         self.xrot = self.yrot = self.zrot = False
         self.rot = 0.0
-        self.label_text = """
-            Hi, I'm the Friendly Snowman.
-            I don't have rotational feature implemented in me
-        """
-
+        
     def draw(self):
         
         # draw the shelf

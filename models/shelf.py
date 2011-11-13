@@ -1,12 +1,14 @@
 from pyglet.gl import *
 from pyglet import image
 import os
+from utils.text import Text
 
 class Shelf:
-    def __init__(self, height=100, radius=100, image_file='shelf.jpg'):
+    def __init__(self, height=100, radius=100, image_file='shelf.jpg', label="Hello"):
         self.radius = radius
         self.height = height
         self.image_file = image_file
+        self.label = Text(label, x = 0, y = 0)
         self.load_textures()
 
     def load_textures(self):
@@ -24,3 +26,7 @@ class Shelf:
         gluQuadricTexture(quad, GL_TRUE)
         gluCylinder(quad, 5, 5, self.height, 100, 100) 
         gluDisk(quad, 0, self.radius, 100, 100 )
+        glRotatef(-90, 1, 0, 0)
+        glTranslatef(-15, 10, 60)
+        self.label.draw()
+
