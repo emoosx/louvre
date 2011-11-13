@@ -27,6 +27,6 @@ class Shelf:
         gluCylinder(quad, 5, 5, self.height, 100, 100) 
         gluDisk(quad, 0, self.radius, 100, 100 )
         glRotatef(-90, 1, 0, 0)
-        glTranslatef(-15, 10, 60)
+        glTranslatef(30, 30, 60)
         self.label.draw()
 
