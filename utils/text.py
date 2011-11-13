@@ -17,12 +17,6 @@ class Text():
                 dpi = 500)
 
     def update(self,text=None):
-        # make sure the text is at the right place after we go fullscreen
-        if self.oy==None:
-            self.label.y=self.window.height-40
-        if self.ox==None:
-            self.label.x=0
-
         # update the text itself
         if text != None:
             self.label.text=text
