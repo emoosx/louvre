@@ -2,7 +2,7 @@ from pyglet.gl import *
 from pyglet import image
 import os
 
-class floor:
+class Floor:
     def __init__(self, width, height, image_file):
         self.width = width
         self.height = height

@@ -1,19 +1,19 @@
 from pyglet.gl import *
 from pyglet import image
 import os
-from shelf import shelf
+from shelf import Shelf
 
-class basketball:
+class Basketball:
     def __init__(self, radius=40, image_file="bb.jpg"):
         self.radius = radius
         self.image_file = image_file
-        self.shelf = shelf()
+        self.shelf = Shelf()
         self.scale = 1
         self.texture_status = True
         self.load_textures()
 
         # rotational values
-        self.xrot = self.yrot = self.zrot = False
+        self.xrot = self.yrot = self.zrot = True
         self.rot = 0.0
 
     def load_textures(self):

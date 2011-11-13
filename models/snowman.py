@@ -1,13 +1,13 @@
 from pyglet.gl import *
 from pyglet import image
 import os
-from shelf import shelf
+from shelf import Shelf
 
-class snowman:
+class Snowman:
     def __init__(self, body_radius=50 ):
         self.body_radius = body_radius
         self.scale = 1 
-        self.shelf = shelf()
+        self.shelf = Shelf()
         # rotational values
         self.xrot = self.yrot = self.zrot = False
         self.rot = 0.0

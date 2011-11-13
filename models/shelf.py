@@ -2,7 +2,7 @@ from pyglet.gl import *
 from pyglet import image
 import os
 
-class shelf:
+class Shelf:
     def __init__(self, height=100, radius=100, image_file='shelf.jpg'):
         self.radius = radius
         self.height = height

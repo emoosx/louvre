@@ -2,16 +2,16 @@ from OpenGL.GLUT import *
 from pyglet.gl import *
 from pyglet import image
 import os
-from shelf import shelf
+from shelf import Shelf
 
-class teapot:
+class Teapot:
     def __init__(self, size=40, image_file='silverware.jpg'):
         self.size = size
         self.scale = 1
         self.texture_status = True
         self.image_file = image_file
         self.load_textures()
-        self.shelf = shelf() 
+        self.shelf = Shelf() 
 
         # rotational values
         self.xrot = self.yrot = self.zrot = True
