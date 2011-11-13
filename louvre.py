@@ -2,14 +2,15 @@ from pyglet.gl import *
 from pyglet.window import key
 from resources import grid,camera,draw_localAxis
 
-from models.floor import floor
-from models.teapot import teapot
-from models.basketball import basketball
-from models.snowman import snowman
+from models.floor import Floor
+from models.teapot import Teapot
+from models.basketball import Basketball
+from models.snowman import Snowman
+from models.painting import Painting
 
-class louvre(pyglet.window.Window):
+class Louvre(pyglet.window.Window):
     def __init__(self):
-        super(louvre, self).__init__(width=800,height=600)
+        super(Louvre, self).__init__(width=800,height=600)
 
         self.set_exclusive_mouse(True)
         self.grid    = grid(size=500)
@@ -23,26 +24,54 @@ class louvre(pyglet.window.Window):
         self.light = False
 
         # walls and floors
-        self.floor = floor(500, 500, 'lightwood.jpg')
-        self.right_wall = floor(500, 500, 'lightwood.jpg')
-        self.left_wall = floor(500, 500, 'lightwood.jpg')
-        self.behind_wall = floor(500, 500, 'lightwood.jpg')
+        self.floor = Floor(500, 500, 'lightwood.jpg')
+        self.right_wall = Floor(500, 500, 'lightwood.jpg')
+        self.left_wall = Floor(500, 500, 'lightwood.jpg')
+        self.behind_wall = Floor(500, 500, 'lightwood.jpg')
 
 
 
         # Exhibits
         self.exhibits = []
 
-        self.teapot = teapot()   
+        self.teapot = Teapot()   
         self.exhibits.append(self.teapot)
 
-        self.basketball = basketball()
+        self.basketball = Basketball()
         self.exhibits.append(self.basketball)
 
-        self.snowman = snowman()
+        self.snowman = Snowman()
         self.exhibits.append(self.snowman)
 
+        starry_night_label = """
+            Starry Night Painting by
+            Van Goh
+        """
+        self.starry_night = Painting(100, 100, 'starry_night.jpg', starry_night_label)
+        self.exhibits.append(self.starry_night)
+        
 
+        scream_label = """
+            Scream Painting by
+            Picaso
+        """
+        self.scream = Painting(100, 100, 'scream.jpg', scream_label)
+        self.exhibits.append(self.scream)
+        
+
+        van_gogh_label = """
+            Van Gogh Painting by
+            Van Gogh
+        """
+        self.van_gogh = Painting(50, 70, 'vangogh.jpg', van_gogh_label)
+        self.exhibits.append(self.van_gogh)
+        
+        son_of_man_label = """
+            Son of Man Painting by
+            Rene Magritte
+        """
+        self.son_of_man = Painting(70, 100, 'son_of_man.jpg', son_of_man_label)
+        self.exhibits.append(self.son_of_man)
          
         # Current Focus
         self.current_index = 0
@@ -166,24 +195,47 @@ class louvre(pyglet.window.Window):
 
         # teapot
         glPushMatrix()
-        glTranslatef( -300, self.teapot.shelf.height, 0)
+        glTranslatef( -200, self.teapot.shelf.height, 0)
         self.teapot.draw()
         glPopMatrix()
 
         # basketball
         glPushMatrix()
-        glTranslatef( 300, self.basketball.shelf.height, 0)
+        glTranslatef( 200, self.basketball.shelf.height, 0)
         self.basketball.draw()
         glPopMatrix()
 
         # snowman
         glPushMatrix()
-        glTranslatef(-300, self.snowman.shelf.height, 400)
+        glTranslatef(-200, self.snowman.shelf.height, 400)
         glRotatef(90, 0, 1, 0)
         self.snowman.draw()
         glPopMatrix()
 
-assignment_1 = louvre()
+        # paintings ( starry_night )
+        glPushMatrix()
+        glTranslatef(200, 300, -249)
+        self.starry_night.draw()
+        glPopMatrix()
+
+        glPushMatrix()
+        glTranslatef(-499, 300, 0)
+        glRotatef(-90, 0, 1, 0)
+        self.scream.draw()
+        glPopMatrix()
+
+        glPushMatrix()
+        glTranslatef(-200, 300, -249)
+        self.van_gogh.draw()
+        glPopMatrix()
+
+        glPushMatrix()
+        glTranslatef(499, 300, 0)
+        glRotatef(90, 0, 1, 0)
+        self.son_of_man.draw()
+        glPopMatrix()
+
+assignment_1 = Louvre()
 while not assignment_1.has_exit:
     assignment_1.update()
     assignment_1.draw()
