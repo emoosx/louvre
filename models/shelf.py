@@ -10,6 +10,7 @@ class Shelf:
         self.image_file = image_file
         self.label = Text(label, x = 0, y = 0)
         self.load_textures()
+        self.bounce_status = True
 
     def load_textures(self):
         texture_file = os.getcwd() + os.path.join('/images', self.image_file)
@@ -29,4 +30,6 @@ class Shelf:
         glRotatef(-90, 1, 0, 0)
         glTranslatef(30, 30, 60)
         self.label.draw()
-
+# 
+    def update(self):
+        pass

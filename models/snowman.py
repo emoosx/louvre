@@ -73,4 +73,4 @@ class Snowman:
 
         
     def update(self):
-        pass        
+        self.shelf.update()        

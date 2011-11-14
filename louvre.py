@@ -104,6 +104,13 @@ class Louvre(pyglet.window.Window):
                 glDisable(GL_LIGHTING)
             else:
                 glEnable(GL_LIGHTING)
+        if sym == key.J:
+            self.current_focus.shelf.height += 0.9
+            print "Shelf Height of Obj %d is %f" % (self.current_index, self.current_focus.shelf.height)
+        if sym == key.K:
+            self.current_focus.shelf.height -= 0.9
+            print "Shelf Height of Obj %d is %f" % (self.current_index, self.current_focus.shelf.height)
+        
 
         # Control of rotational axes
         if sym == key.X:

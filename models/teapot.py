@@ -60,3 +60,5 @@ class Teapot:
             self.rot += 0.0
         else:
             self.rot += 0.5
+        
+        self.shelf.update()
